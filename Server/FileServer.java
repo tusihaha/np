@@ -100,20 +100,21 @@ class AcceptThread extends Thread {
       File[] files_in_folder = folder.listFiles();
       if (files_in_folder == null) {
         try {
-          os.writeUTF("");
+          dos.writeUTF("");
         } catch (Exception e) {
           e.printStackTrace();
           return -1;
         }
-      }
-      for (int i = 0; i <  files_in_folder.length; i++) {
-        if(files_in_folder[i].isFile()) {
-          try {
-            dos.writeUTF(files_in_folder[i].getName());
-            System.out.println("\\" + files_in_folder[i].getName());
-          } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
+      } else {
+        for (int i = 0; i <  files_in_folder.length; i++) {
+          if(files_in_folder[i].isFile()) {
+            try {
+              dos.writeUTF(files_in_folder[i].getName());
+              System.out.println("\\" + files_in_folder[i].getName());
+            } catch (Exception e) {
+              e.printStackTrace();
+              return -1;
+            }
           }
         }
       }
