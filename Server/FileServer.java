@@ -70,25 +70,29 @@ class AcceptThread extends Thread {
 
   // Methods
   public void run() {
-    InputStream is = connect_sock.getInputStream();
-    DataInputStream dis = new DataInputStream(is);
-    OutputStream os = connect_sock.getOutputStream();
-    DataOutputStream dos = new DataOutputStream(os);
-    String command = "";
-    while (!command.equals("@logout")) {
-      try {
-        command = dis.readUTF();
-        System.out.println("Client : " + command);
-        if (AcceptThread.handleCommand(command, dis, dos) < 0) {
+    try {
+      InputStream is = connect_sock.getInputStream();
+      DataInputStream dis = new DataInputStream(is);
+      OutputStream os = connect_sock.getOutputStream();
+      DataOutputStream dos = new DataOutputStream(os);
+      String command = "";
+      while (!command.equals("@logout")) {
+        try {
+          command = dis.readUTF();
+          System.out.println("Client : " + command);
+          if (AcceptThread.handleCommand(command, dis, dos) < 0) {
+            break;
+          }
+        } catch (Exception e) {
+          e.printStackTrace();
           break;
         }
-      } catch (Exception e) {
-        e.printStackTrace();
-        break;
       }
+      System.out.println("Close connection.");
+      connect_sock.close();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    System.out.println("Close connection.");
-    connect_sock.close();
   }
 
   private static int handleCommand(
