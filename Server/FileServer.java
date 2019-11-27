@@ -46,7 +46,7 @@ public class FileServer {
 
 
 // Thread
-private class AcceptThread extends Thread {
+class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
 
@@ -70,7 +70,7 @@ private class AcceptThread extends Thread {
         try {
           command = dis.readUTF();
           System.out.println("Client : " + command);
-          if (FileServer.handleCommand(command, dis, dos) < 0) {
+          if (AcceptThread.handleCommand(command, dis, dos) < 0) {
             break;
           }
         } catch (IOException e) {
