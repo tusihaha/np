@@ -1,7 +1,7 @@
 /*
-Họ và tên : Lê Đức Toàn
-Mã sinh viên : 16021655
-Mô tả : Chương trình file server xử lý các lệnh của client
+Ho va ten : Le Đuc Toan
+Ma sinh vien : 16021655
+Mo ta : Chuong trinh file server xu ly cac lenh cua client
 */
 
 import java.io.DataInputStream;
