@@ -1,5 +1,5 @@
 /*
-Ho va ten : Le Đuc Toan
+Ho va ten : Le Duc Toan
 Ma sinh vien : 16021655
 Mo ta : Chuong trinh file client cho phep thao tac mot so lenh voi file tren server
 */
