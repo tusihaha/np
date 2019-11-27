@@ -46,7 +46,7 @@ public class FileServer {
 
 
 // Thread
-class AcceptThread extends Thread {
+class AcceptThread extends Thread throws Exception {
   // Variables
   private ServerSocket listen_sock = null;
 
