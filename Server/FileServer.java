@@ -59,7 +59,6 @@ class AcceptThread extends Thread {
   public void run() {
     Socket connect_sock = null;
     try {
-      throw new IOException();
       connect_sock = listen_sock.accept();
       System.out.println("Accept connection " + connect_sock);
       InputStream is = connect_sock.getInputStream();
@@ -69,20 +68,19 @@ class AcceptThread extends Thread {
       String command = "";
       while (!command.equals("@logout")) {
         try {
-          throw new IOException();
           command = dis.readUTF();
           System.out.println("Client : " + command);
           if (AcceptThread.handleCommand(command, dis, dos) < 0) {
             break;
           }
-        } catch (IOException e) {
+        } catch (Exception e) {
           e.printStackTrace();
           break;
         }
       }
       System.out.println("Close connection.");
       connect_sock.close();
-    } catch(IOException e) {
+    } catch(Exception e) {
       e.printStackTrace();
     } finally {
       if (connect_sock != null) {
@@ -103,7 +101,7 @@ class AcceptThread extends Thread {
           try {
             dos.writeUTF(files_in_folder[i].getName());
             System.out.println("\\" + files_in_folder[i].getName());
-          } catch (IOException e) {
+          } catch (Exception e) {
             e.printStackTrace();
             return -1;
           }
@@ -132,7 +130,7 @@ class AcceptThread extends Thread {
             }
             fis.close();
             System.out.println("Client : " + dis.readUTF());
-          } catch (IOException e) {
+          } catch (Exception e) {
             e.printStackTrace();
             return -1;
           }
@@ -140,7 +138,7 @@ class AcceptThread extends Thread {
           try {
             System.out.println("Server : Read file false");
             dos.writeUTF("Read file false");
-          } catch (IOException e) {
+          } catch (Exception e) {
             e.printStackTrace();
             return -1;
           }
