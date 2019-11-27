@@ -46,10 +46,6 @@ public class FileServer {
         c_thread.start();
       } catch(IOException e) {
         e.printStackTrace();
-      } finally {
-        if (connect_sock != null) {
-          connect_sock.close();
-        }
       }
     }
   }
