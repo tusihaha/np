@@ -57,9 +57,9 @@ class AcceptThread extends Thread {
 
   // Methods
   public void run() {
-    throw new IOException();
     Socket connect_sock = null;
     try {
+      throw new IOException();
       connect_sock = listen_sock.accept();
       System.out.println("Accept connection " + connect_sock);
       InputStream is = connect_sock.getInputStream();
