@@ -38,8 +38,19 @@ public class FileServer {
         " <Ctrl-C> to close ..."
       );
       // Accept connection
-      AcceptThread c_thread = new AcceptThread(listen_sock);
-      c_thread.start();
+      Socket connect_sock = null;
+      try {
+        connect_sock = listen_sock.accept();
+        System.out.println("Accept connection " + connect_sock);
+        AcceptThread c_thread = new AcceptThread(listen_sock);
+        c_thread.start();
+      } catch(IOException e) {
+        e.printStackTrace();
+      } finally {
+        if (connect_sock != null) {
+          connect_sock.close();
+        }
+      }
     }
   }
 }
@@ -57,32 +68,25 @@ class AcceptThread extends Thread {
 
   // Methods
   public void run() {
-    Socket connect_sock = null;
-    try {
-      connect_sock = listen_sock.accept();
-      System.out.println("Accept connection " + connect_sock);
-      InputStream is = connect_sock.getInputStream();
-      DataInputStream dis = new DataInputStream(is);
-      OutputStream os = connect_sock.getOutputStream();
-      DataOutputStream dos = new DataOutputStream(os);
-      String command = "";
-      while (!command.equals("@logout")) {
-        try {
-          command = dis.readUTF();
-          System.out.println("Client : " + command);
-          if (AcceptThread.handleCommand(command, dis, dos) < 0) {
-            break;
-          }
-        } catch (Exception e) {
-          e.printStackTrace();
+    InputStream is = connect_sock.getInputStream();
+    DataInputStream dis = new DataInputStream(is);
+    OutputStream os = connect_sock.getOutputStream();
+    DataOutputStream dos = new DataOutputStream(os);
+    String command = "";
+    while (!command.equals("@logout")) {
+      try {
+        command = dis.readUTF();
+        System.out.println("Client : " + command);
+        if (AcceptThread.handleCommand(command, dis, dos) < 0) {
           break;
         }
+      } catch (Exception e) {
+        e.printStackTrace();
+        break;
       }
-      System.out.println("Close connection.");
-      connect_sock.close();
-    } catch(Exception e) {
-      e.printStackTrace();
     }
+    System.out.println("Close connection.");
+    connect_sock.close();
   }
 
   private static int handleCommand(
