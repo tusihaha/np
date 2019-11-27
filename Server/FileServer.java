@@ -42,7 +42,7 @@ public class FileServer {
       try {
         connect_sock = listen_sock.accept();
         System.out.println("Accept connection " + connect_sock);
-        AcceptThread c_thread = new AcceptThread(listen_sock);
+        AcceptThread c_thread = new AcceptThread(listen_sock, connect_sock);
         c_thread.start();
       } catch(IOException e) {
         e.printStackTrace();
@@ -60,10 +60,12 @@ public class FileServer {
 class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
+  private Socket connect_sock = null;
 
   // Contructor
-  AcceptThread(ServerSocket listen_sock) {
+  AcceptThread(ServerSocket listen_sock, Socket connect_sock) {
     this.listen_sock = listen_sock;
+    this.connect_sock = connect_sock;
   }
 
   // Methods
