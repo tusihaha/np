@@ -46,7 +46,7 @@ public class FileServer {
 
 
 // Thread
-class AcceptThread extends Thread throws Exception {
+class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
 
@@ -56,7 +56,7 @@ class AcceptThread extends Thread throws Exception {
   }
 
   // Methods
-  public void run() {
+  public void run() throws IOException {
     Socket connect_sock = null;
     try {
       connect_sock = listen_sock.accept();
