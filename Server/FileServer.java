@@ -69,6 +69,7 @@ class AcceptThread extends Thread {
       String command = "";
       while (!command.equals("@logout")) {
         try {
+          throw new IOException();
           command = dis.readUTF();
           System.out.println("Client : " + command);
           if (AcceptThread.handleCommand(command, dis, dos) < 0) {
