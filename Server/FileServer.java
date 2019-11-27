@@ -82,10 +82,6 @@ class AcceptThread extends Thread {
       connect_sock.close();
     } catch(Exception e) {
       e.printStackTrace();
-    } finally {
-      if (connect_sock != null) {
-        connect_sock.close();
-      }
     }
   }
 
