@@ -99,7 +99,12 @@ class AcceptThread extends Thread {
       File folder = new File("SharedFolder");
       File[] files_in_folder = folder.listFiles();
       if (files_in_folder == null) {
-        dos.writeUTF("");
+        try {
+          os.writeUTF("");
+        } catch (Exception e) {
+          e.printStackTrace();
+          return -1;
+        }
       }
       for (int i = 0; i <  files_in_folder.length; i++) {
         if(files_in_folder[i].isFile()) {
