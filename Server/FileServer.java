@@ -50,6 +50,7 @@ public class FileServer {
         no ++;
       } catch(IOException e) {
         e.printStackTrace();
+        System.out.println("\nJUST PRINT , SERVER STILL LISTEN\n");
       }
     }
   }
@@ -61,7 +62,7 @@ class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
   private Socket connect_sock = null;
-  private static int no = 0;
+  private int no = 0;
 
   // Contructor
   AcceptThread(ServerSocket listen_sock, Socket connect_sock, int no) {
@@ -87,6 +88,7 @@ class AcceptThread extends Thread {
           }
         } catch (Exception e) {
           e.printStackTrace();
+          System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
           break;
         }
       }
@@ -94,6 +96,7 @@ class AcceptThread extends Thread {
       connect_sock.close();
     } catch (Exception e) {
       e.printStackTrace();
+      System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
     }
   }
 
@@ -109,6 +112,7 @@ class AcceptThread extends Thread {
           dos.writeUTF("");
         } catch (Exception e) {
           e.printStackTrace();
+          System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
           return -1;
         }
       } else {
@@ -119,6 +123,7 @@ class AcceptThread extends Thread {
               System.out.println("\\" + files_in_folder[i].getName());
             } catch (Exception e) {
               e.printStackTrace();
+              System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
               return -1;
             }
           }
@@ -149,6 +154,7 @@ class AcceptThread extends Thread {
             System.out.println("Client " + no + " : " + dis.readUTF());
           } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
             return -1;
           }
         } else {
@@ -157,6 +163,7 @@ class AcceptThread extends Thread {
             dos.writeUTF("Read file false");
           } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
             return -1;
           }
         }
@@ -188,6 +195,7 @@ class AcceptThread extends Thread {
           dos.writeUTF("Uploaded file");
         } catch (IOException e) {
           e.printStackTrace();
+          System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
           return -1;
         }
       }
