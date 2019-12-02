@@ -83,7 +83,9 @@ public class FileClient {
         if (file_status.equals("File existed")) {
           long filesize = dis.readLong();
           System.out.println("Server : " + filesize + "(bytes)");
-          FileOutputStream fos = new FileOutputStream(command_parts[1]);
+          FileOutputStream fos = new FileOutputStream(
+            "SharedFolder/" + command_parts[1]
+          );
           byte[] buffer = new byte[1024];
           int read_bytes = 0;
           while (filesize > 0) {
