@@ -33,6 +33,7 @@ public class FileServer {
     System.out.println("Create socket success ...");
 
     boolean running = true;
+    int no = 1;
     while (running) {
       System.out.println(
         "\nServer is listenning on port " +
@@ -44,8 +45,9 @@ public class FileServer {
       try {
         connect_sock = listen_sock.accept();
         System.out.println("Accept connection " + connect_sock);
-        AcceptThread c_thread = new AcceptThread(listen_sock, connect_sock);
+        AcceptThread c_thread = new AcceptThread(listen_sock, connect_sock, no);
         c_thread.start();
+        no ++;
       } catch(IOException e) {
         e.printStackTrace();
       }
@@ -59,11 +61,13 @@ class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
   private Socket connect_sock = null;
+  private int no = 0;
 
   // Contructor
-  AcceptThread(ServerSocket listen_sock, Socket connect_sock) {
+  AcceptThread(ServerSocket listen_sock, Socket connect_sock, int no) {
     this.listen_sock = listen_sock;
     this.connect_sock = connect_sock;
+    this.no = no;
   }
 
   // Methods
@@ -77,7 +81,7 @@ class AcceptThread extends Thread {
       while (!command.equals("@logout")) {
         try {
           command = dis.readUTF();
-          System.out.println("Client : " + command);
+          System.out.println("Client "+ no + " : " + command);
           if (AcceptThread.handleCommand(command, dis, dos) < 0) {
             break;
           }
@@ -142,7 +146,7 @@ class AcceptThread extends Thread {
               }
             }
             fis.close();
-            System.out.println("Client : " + dis.readUTF());
+            System.out.println("Client " + no + " : " + dis.readUTF());
           } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -168,7 +172,7 @@ class AcceptThread extends Thread {
         } while (file.exists());
         try {
           long filesize = dis.readLong();
-          System.out.println("Client : " + filesize + "(bytes)");
+          System.out.println("Client " + no + " : " + filesize + "(bytes)");
           FileOutputStream fos = new FileOutputStream(file.getName());
           byte[] buffer = new byte[1024];
           int read_bytes = 0;
