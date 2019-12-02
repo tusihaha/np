@@ -151,7 +151,7 @@ class AcceptThread extends Thread {
               }
             }
             fis.close();
-            System.out.println("Client " + no + " : " + dis.readUTF());
+            System.out.println("Client " + this.no + " : " + dis.readUTF());
           } catch (Exception e) {
             e.printStackTrace();
             System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
@@ -179,7 +179,7 @@ class AcceptThread extends Thread {
         } while (file.exists());
         try {
           long filesize = dis.readLong();
-          System.out.println("Client " + no + " : " + filesize + "(bytes)");
+          System.out.println("Client " + this.no + " : " + filesize + "(bytes)");
           FileOutputStream fos = new FileOutputStream(file.getName());
           byte[] buffer = new byte[1024];
           int read_bytes = 0;
