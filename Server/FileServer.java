@@ -62,13 +62,13 @@ class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
   private Socket connect_sock = null;
-  private int no = 0;
+  private int num_o = 0;
 
   // Contructor
   AcceptThread(ServerSocket listen_sock, Socket connect_sock, int no) {
     this.listen_sock = listen_sock;
     this.connect_sock = connect_sock;
-    this.no = no;
+    this.num_o = no;
   }
 
   // Methods
@@ -82,7 +82,7 @@ class AcceptThread extends Thread {
       while (!command.equals("@logout")) {
         try {
           command = dis.readUTF();
-          System.out.println("Client "+ no + " : " + command);
+          System.out.println("Client "+ num_o + " : " + command);
           if (AcceptThread.handleCommand(command, dis, dos) < 0) {
             break;
           }
@@ -151,7 +151,7 @@ class AcceptThread extends Thread {
               }
             }
             fis.close();
-            System.out.println("Client " + this.no + " : " + dis.readUTF());
+            System.out.println("Client " + num_o + " : " + dis.readUTF());
           } catch (Exception e) {
             e.printStackTrace();
             System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
@@ -179,7 +179,7 @@ class AcceptThread extends Thread {
         } while (file.exists());
         try {
           long filesize = dis.readLong();
-          System.out.println("Client " + this.no + " : " + filesize + "(bytes)");
+          System.out.println("Client " + num_o + " : " + filesize + "(bytes)");
           FileOutputStream fos = new FileOutputStream(file.getName());
           byte[] buffer = new byte[1024];
           int read_bytes = 0;
