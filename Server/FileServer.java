@@ -6,6 +6,7 @@ Mo ta : Chuong trinh file server xu ly cac lenh cua client
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -157,8 +158,9 @@ class AcceptThread extends Thread {
         }
       } else if (command_parts.length == 2 && command_parts[0].equals("put")) {
         Random rd = new Random();
+        File file;
         do {
-          File file = new File(
+          file = new File(
             "SharedFolder/" +
             command_parts[1] +
             rd.nextInt()
