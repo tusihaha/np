@@ -61,7 +61,7 @@ class AcceptThread extends Thread {
   // Variables
   private ServerSocket listen_sock = null;
   private Socket connect_sock = null;
-  private int no = 0;
+  private static int no = 0;
 
   // Contructor
   AcceptThread(ServerSocket listen_sock, Socket connect_sock, int no) {
