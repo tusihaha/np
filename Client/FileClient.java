@@ -99,6 +99,36 @@ public class FileClient {
         e.printStackTrace();
         return -1;
       }
+    } else if (command_parts.length == 2 && command_parts[0].equals("put")) {
+      File file = new File("SharedFolder/" + command_parts[1]);
+      if (file.exists() && file.canRead()) {
+        try {
+          System.out.println("Client : File existed");
+          dos.writeUTF(command);
+          long filesize = file.length();
+          System.out.println("Client : " + filesize + "(bytes)");
+          dos.writeLong(filesize);
+          FileInputStream fis = new FileInputStream(file);
+          byte[] buffer = new byte[1024];
+          int read_bytes = 0;
+          while (filesize > 0) {
+            read_bytes = fis.read(buffer);
+            if (read_bytes > 0) {
+              dos.write(buffer, 0, read_bytes);
+              filesize -= read_bytes;
+            }
+          }
+          fis.close();
+          System.out.println("Server : " + dis.readUTF());
+        } catch (Exception e) {
+          e.printStackTrace();
+          return -1;
+        }
+      } else {
+          System.out.println("Client : Read file false");
+          return -1;
+        }
+      }
     } else if (
       command_parts.length == 1 && command_parts[0].equals("@logout")
       ) {

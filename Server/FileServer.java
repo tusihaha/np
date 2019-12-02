@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.lang.String;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 
 public class FileServer {
   // Static variables
@@ -153,6 +154,35 @@ class AcceptThread extends Thread {
             e.printStackTrace();
             return -1;
           }
+        }
+      } else if (command_parts.length == 2 && command_parts[0].equals("put")) {
+        Random rd = new Random();
+        do {
+          File file = new File(
+            "SharedFolder/" +
+            command_parts[1] +
+            rd.nextInt()
+          );
+        } while (file.exists());
+        try {
+          long filesize = dis.readLong();
+          System.out.println("Client : " + filesize + "(bytes)");
+          FileOutputStream fos = new FileOutputStream(file.getName());
+          byte[] buffer = new byte[1024];
+          int read_bytes = 0;
+          while (filesize > 0) {
+            read_bytes = dis.read(buffer);
+            if (read_bytes > 0) {
+              fos.write(buffer, 0, read_bytes);
+              filesize -= read_bytes;
+            }
+          }
+          fos.close();
+          System.out.println("Server : Uploaded file");
+          dos.writeUTF("Uploaded file");
+        } catch (IOException e) {
+          e.printStackTrace();
+          return -1;
         }
       }
     }
