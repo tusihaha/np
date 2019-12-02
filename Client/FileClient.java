@@ -6,7 +6,9 @@ Mo ta : Chuong trinh file client cho phep thao tac mot so lenh voi file tren ser
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
