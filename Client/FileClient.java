@@ -125,9 +125,8 @@ public class FileClient {
           return -1;
         }
       } else {
-          System.out.println("Client : Read file false");
-          return -1;
-        }
+        System.out.println("Client : Read file false");
+        return -1;
       }
     } else if (
       command_parts.length == 1 && command_parts[0].equals("@logout")
