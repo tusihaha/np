@@ -23,13 +23,13 @@ public class FileServer {
   private static int downloaded = 0;
   private static int uploaded = 0;
 
-  private static synchronized void addDownloaded() {
+  public static synchronized void addDownloaded() {
     downloaded ++;
-    System.out.println("Downloaded: " + downloaded, "Uploaded: " + uploaded);
+    System.out.println("Downloaded: " + downloaded + "Uploaded: " + uploaded);
   }
-  private static synchronized void addUploaded() {
+  public static synchronized void addUploaded() {
     uploaded ++;
-    System.out.println("Downloaded: " + downloaded, "Uploaded: " + uploaded);
+    System.out.println("Downloaded: " + downloaded + "Uploaded: " + uploaded);
   }
   // Methods
   public static void main(String[] args) throws IOException {
