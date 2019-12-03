@@ -20,6 +20,17 @@ import java.util.Random;
 public class FileServer {
   // Static variables
   private static int SERVER_PORT = 8080;
+  private static int downloaded = 0;
+  private static int uploaded = 0;
+
+  private static synchronized void addDownloaded() {
+    downloaded ++;
+    System.out.println("Downloaded: " + downloaded, "Uploaded: " + uploaded);
+  }
+  private static synchronized void addUploaded() {
+    uploaded ++;
+    System.out.println("Downloaded: " + downloaded, "Uploaded: " + uploaded);
+  }
   // Methods
   public static void main(String[] args) throws IOException {
     // Create listen socket
@@ -45,7 +56,7 @@ public class FileServer {
       try {
         connect_sock = listen_sock.accept();
         System.out.println("Accept connection " + connect_sock);
-        AcceptThread c_thread = new AcceptThread(listen_sock, connect_sock, no);
+        AcceptThread c_thread = new AcceptThread(connect_sock, no);
         c_thread.start();
         no ++;
       } catch(IOException e) {
@@ -60,13 +71,11 @@ public class FileServer {
 // Thread
 class AcceptThread extends Thread {
   // Variables
-  private ServerSocket listen_sock = null;
   private Socket connect_sock = null;
   private int no = 0;
 
   // Contructor
-  AcceptThread(ServerSocket listen_sock, Socket connect_sock, int no) {
-    this.listen_sock = listen_sock;
+  AcceptThread(Socket connect_sock, int no) {
     this.connect_sock = connect_sock;
     this.no = no;
   }
@@ -152,6 +161,7 @@ class AcceptThread extends Thread {
             }
             fis.close();
             System.out.println("Client " + no + " : " + dis.readUTF());
+            FileServer.addDownloaded();
           } catch (Exception e) {
             e.printStackTrace();
             System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
@@ -180,7 +190,10 @@ class AcceptThread extends Thread {
         try {
           long filesize = dis.readLong();
           System.out.println("Client " + no + " : " + filesize + "(bytes)");
-          FileOutputStream fos = new FileOutputStream(file.getName());
+          FileOutputStream fos = new FileOutputStream(
+            "SharedFolder/" +
+            file.getName()
+          );
           byte[] buffer = new byte[1024];
           int read_bytes = 0;
           while (filesize > 0) {
@@ -192,7 +205,8 @@ class AcceptThread extends Thread {
           }
           fos.close();
           System.out.println("Server : Uploaded file");
-          dos.writeUTF("Uploaded file");
+          dos.writeUTF("Uploaded file" + file.getName());
+          FileServer.addUploaded();
         } catch (IOException e) {
           e.printStackTrace();
           System.out.println("\nJUST PRINT MESSAGE, SERVER STILL LISTEN\n");
