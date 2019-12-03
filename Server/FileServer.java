@@ -25,11 +25,11 @@ public class FileServer {
 
   public static synchronized void addDownloaded() {
     downloaded ++;
-    System.out.println("Downloaded: " + downloaded + "Uploaded: " + uploaded);
+    System.out.println("Downloaded: " + downloaded + " Uploaded: " + uploaded);
   }
   public static synchronized void addUploaded() {
     uploaded ++;
-    System.out.println("Downloaded: " + downloaded + "Uploaded: " + uploaded);
+    System.out.println("Downloaded: " + downloaded + " Uploaded: " + uploaded);
   }
   // Methods
   public static void main(String[] args) throws IOException {
